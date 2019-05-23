@@ -11,6 +11,7 @@
 		D079EBD72296390000A8B0A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D079EBD62296390000A8B0A3 /* Assets.xcassets */; };
 		D079EBDA2296390000A8B0A3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D079EBD82296390000A8B0A3 /* MainMenu.xib */; };
 		D079EBDD2296390000A8B0A3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D079EBDC2296390000A8B0A3 /* main.m */; };
+		D079EBE622963B4E00A8B0A3 /* DragAndDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = D079EBE522963B4E00A8B0A3 /* DragAndDropView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,8 @@
 		D079EBDB2296390000A8B0A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D079EBDC2296390000A8B0A3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D079EBDE2296390000A8B0A3 /* DragAndDropSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DragAndDropSample.entitlements; sourceTree = "<group>"; };
+		D079EBE422963B4E00A8B0A3 /* DragAndDropView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DragAndDropView.h; sourceTree = "<group>"; };
+		D079EBE522963B4E00A8B0A3 /* DragAndDropView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DragAndDropView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +59,8 @@
 			children = (
 				D079EBD3229638FF00A8B0A3 /* AppDelegate.h */,
 				D079EBD4229638FF00A8B0A3 /* AppDelegate.m */,
+				D079EBE422963B4E00A8B0A3 /* DragAndDropView.h */,
+				D079EBE522963B4E00A8B0A3 /* DragAndDropView.m */,
 				D079EBD62296390000A8B0A3 /* Assets.xcassets */,
 				D079EBD82296390000A8B0A3 /* MainMenu.xib */,
 				D079EBDB2296390000A8B0A3 /* Info.plist */,
@@ -136,6 +141,7 @@
 			files = (
 				D079EBDD2296390000A8B0A3 /* main.m in Sources */,
 				D079EBD5229638FF00A8B0A3 /* AppDelegate.m in Sources */,
+				D079EBE622963B4E00A8B0A3 /* DragAndDropView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
