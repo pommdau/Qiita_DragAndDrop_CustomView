@@ -43,77 +43,78 @@
     }
 }
 
+// MARK:- NSDraggingDestination Protocol Methods
+
 /**
- @brief ドラッグしたファイルが目的の境界内に入ると呼ばれる
- 画像が送り先の境界にドラッグされると、送り先にdraggingEntered:メッセージが送信されます。このメソッドは、宛先がどのドラッグ操作を実行するのかを示す値を返す必要があります。
+ @brief Viewの境界にファイルがドラッグされるときに呼ばれる
+        宛先がどのドラッグ操作を実行するのかを示す値を返す必要があります。
  */
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender{
-    _highlight=YES;
-    [self setNeedsDisplay: YES];
+    [self setHighlight:YES];
+    [self setNeedsDisplay: YES];    // ハイライトの情報が変更された場合に再描画を行う
     return NSDragOperationGeneric;
 }
 
 
 /**
- @brief 画像が宛先内にある間、一連のdraggingUpdated:メッセージが送信されます。このメソッドは、宛先がどのドラッグ操作を実行するのかを示す値を返す必要があります。
+ @brief View上にファイルがドラッグで保持されている間、短い間隔毎に呼ばれるメソッド
+ 宛先がどのドラッグ操作を実行するのかを示す値を返す必要があります。
  */
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender{
-    _highlight=YES;
+    [self setHighlight:YES];
     [self setNeedsDisplay: YES];
     return NSDragOperationGeneric;
 }
 
 /**
- @brief レシーバからドラッグが外れた時に呼び出されます
- 画像が送り先からドラッグさdraggingExited:れると、が送信され、一連のNSDraggingDestinationメッセージが停止します。再入力すると、シーケンスは（新しいdraggingEntered:メッセージとともに）再び始まります。
+ @brief View上にファイルがドラッグされなくなった際に呼ばれる
  */
 - (void)draggingExited:(id <NSDraggingInfo>)sender{
-    _highlight=NO;
+    [self setHighlight:NO];
     [self setNeedsDisplay: YES];
 }
 
 
 /**
- @brief ドラッグしたファイルがリリースされたときに呼ばれる
- イメージが解放さprepareForDragOperation:れると、draggingEntered:またはの最後の呼び出しによって返された値に応じて、イメージがそのソースにスライドバックする（そしてシーケンスを中断する）か、メッセージがデスティネーションに送信されますdraggingUpdated:。
- prepareForDragOperation:メッセージが返された場合はYES、performDragOperation:メッセージが送信されます。
+ @brief View上でファイルがドロップされた際に呼ばれる
+ メッセージが返された場合はYES、performDragOperation:メッセージが送信されます。
  */
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender {
-    _highlight=NO;
+    [self setHighlight:NO];
     [self setNeedsDisplay: YES];
     return YES;
 }
 
 
 /**
- @brief ドラッグしたファイルがリリースされた後に呼ばれる
- Finally, if performDragOperation: returned YES, concludeDragOperation: is sent.
+ @brief View上でファイルがドロップされた後の処理
  */
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender {
     NSArray *draggedFilenames = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
-    //    if ([[[draggedFilenames objectAtIndex:0] pathExtension] isEqual:@"txt"]){
-    //        return YES;
-    //    } else {
-    //        return NO;
-    //    }
+    /*  // 対応していないファイルがドロップした場合の処理の例
+    if ([[[draggedFilenames objectAtIndex:0] pathExtension] isEqual:@"txt"]){
+        return YES; // テキストファイルのみ対象とする
+    } else {
+        return NO;
+    }
+     */
     for (NSString *draggedFilename in draggedFilenames) {
         BOOL isDir = NO;
         if ([[NSFileManager defaultManager] fileExistsAtPath:draggedFilename isDirectory:&isDir] == NO) {
             return NO;
         }
         if (isDir == YES) {
-            return NO;      // フォルダがあったら以降の処理をしない
+            return NO;      // フォルダがあった場合はエラーとする
         }
     }
     return YES;
 }
 
 /**
- @brief ドラッグ操作が完了したときに呼び出されます
+ @brief 一連のドラッグ操作が完了したときに呼ばれる
  */
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender{
-    NSArray *draggedFilenames = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
-    //    NSString *textDataFile = [NSString stringWithContentsOfFile:[draggedFilenames objectAtIndex:0] encoding:NSUTF8StringEncoding error:nil];
-    NSLog(@"%@", draggedFilenames.description);
+    NSArray *filePaths = [[sender draggingPasteboard] propertyListForType:NSFilenamesPboardType];
+    [_delegate DragAndDropViewGetDraggingFiles:filePaths];
 }
 @end

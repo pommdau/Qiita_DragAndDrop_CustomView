@@ -7,11 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface DragAndDropView : NSView
-
+@protocol DragAndDropViewDelegate <NSObject>
+- (void)DragAndDropViewGetDraggingFiles:(NSArray *)files;  // ビュー上にファイルがD&Dされた場合に呼ばれる
 @end
 
-NS_ASSUME_NONNULL_END
+@interface DragAndDropView : NSView
+@property (weak, nonatomic) id <DragAndDropViewDelegate> delegate;
+@end
+
